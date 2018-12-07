@@ -5,17 +5,21 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import java.lang.NumberFormatException
+import kotlinx.android.synthetic.main.activity_main.*
 
 private const val TAG = "MainActivity"
 private const val TEXT_CONTENTS = "TextContent"
 
+private const val STATE_PENDING_OPERATION = "PendingOperation"
+private const val STATE_OPERAND1 = "Operand1"
+private const val STATE_OPERAND1_STORED = "Operand1_Stored"
+
+
 class MainActivity : AppCompatActivity() {
-    private lateinit var result: EditText
-    private lateinit var newNumber: EditText
-    private val displayOperation by lazy(LazyThreadSafetyMode.NONE) { findViewById<TextView>(R.id.operation) }
+//    private lateinit var result: EditText
+//    private lateinit var newNumber: EditText
+//    private val displayOperation by lazy(LazyThreadSafetyMode.NONE) { findViewById<TextView>(R.id.operation) }
 
 
     // Variables to hold the operands and type of calcualation
@@ -28,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        result = findViewById(R.id.result)
+ /*       result = findViewById(R.id.result)
         newNumber = findViewById(R.id.newNumber)
 
         // Data input buttons
@@ -51,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         val buttonMultiply = findViewById<Button>(R.id.buttonMultiply)
         val buttonMinus = findViewById<Button>(R.id.buttonMinus)
         val buttonPlus = findViewById<Button>(R.id.buttonPlus)
-
+*/
         val listener = View.OnClickListener { v ->
             val b = v as Button
             newNumber.append(b.text)
@@ -78,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                 newNumber.setText("")
             }
             pendingOperation = op
-            displayOperation.text = pendingOperation
+            operation.text = pendingOperation
         }
 
         buttonEquals.setOnClickListener(opListener)
@@ -93,9 +97,17 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         Log.d(TAG, "onRestoreInstanceState: Called")
         super.onRestoreInstanceState(savedInstanceState)
+        operand1 = if (savedInstanceState.getBoolean(STATE_OPERAND1_STORED, false)) {
+            savedInstanceState.getDouble(STATE_OPERAND1)
+        }else {
+            null
+        }
+
+        pendingOperation = savedInstanceState.getString(STATE_PENDING_OPERATION)
+        operation.text = pendingOperation
         //   val savedString = savedInstancetState?.getString(TEXT_CONTENTS, "")
         //   textView?.text = savedString
       //  textView?.text = savedInstanceState?.getString(TEXT_CONTENTS, "")
@@ -112,9 +124,14 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         Log.d(TAG, "onSaveInstanceState: Called")
         super.onSaveInstanceState(outState)
+        if (operand1 != null) {
+            outState.putDouble(STATE_OPERAND1, operand1!!)
+            outState.putBoolean(STATE_OPERAND1_STORED, true)
+        }
+        outState.putString(STATE_PENDING_OPERATION, pendingOperation)
      //   outState?.putString(TEXT_CONTENTS, textView?.text.toString())
     }
 
