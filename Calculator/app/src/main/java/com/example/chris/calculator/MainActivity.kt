@@ -108,6 +108,15 @@ class MainActivity : AppCompatActivity() {
             }
             })
 
+        btnClr.setOnClickListener { view ->
+            val value = result.text.toString()
+            result.setText("")
+            newNumber.setText("")
+            operand1 = null
+            pendingOperation = ""
+            operation.text = pendingOperation
+        }
+
     }
     // Debugging Activity Lifecycle Methods
     override fun onStart() {

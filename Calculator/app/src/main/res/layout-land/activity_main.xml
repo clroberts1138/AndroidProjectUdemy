@@ -7,6 +7,14 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity" android:minWidth="48dp" tools:layout_editor_absoluteY="73dp">
 
+    <Button
+            android:text="CLR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnClr"
+            android:minWidth="48dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btnNeg" app:layout_constraintStart_toEndOf="@+id/btnNeg"
+            android:layout_marginStart="8dp"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

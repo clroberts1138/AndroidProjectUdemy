@@ -8,14 +8,14 @@
         tools:context=".MainActivity" android:minWidth="48dp">
 
     <Button
-            android:text="Neg"
+            android:text="CLR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnNeg"
+            android:id="@+id/btnClr"
             android:minWidth="48dp"
             tools:textSize="12sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/buttonDivide"
-            app:layout_constraintStart_toEndOf="@+id/buttonDivide"/>
+            app:layout_constraintStart_toEndOf="@+id/buttonDivide" android:layout_marginStart="48dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btnNeg"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,6 +133,15 @@
             android:minWidth="48dp"
             app:layout_constraintBaseline_toBaselineOf="@+id/button9"
             app:layout_constraintStart_toEndOf="@+id/button9"/>
+    <Button
+            android:text="Neg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnNeg"
+            android:minWidth="48dp"
+            tools:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/buttonDivide"
+            app:layout_constraintStart_toEndOf="@+id/buttonDivide"/>
     <Button
             android:text="*"
             android:layout_width="wrap_content"
