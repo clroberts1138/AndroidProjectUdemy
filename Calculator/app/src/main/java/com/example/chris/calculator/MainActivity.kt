@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         button8.setOnClickListener(listener)
         button9.setOnClickListener(listener)
         buttonDot.setOnClickListener(listener)
+        //btn_neg.setOnClickListener(listener)
 
         val opListener = View.OnClickListener { v ->
             val op = (v as Button).text.toString()
@@ -90,6 +91,23 @@ class MainActivity : AppCompatActivity() {
         buttonMultiply.setOnClickListener(opListener)
         buttonMinus.setOnClickListener(opListener)
         buttonPlus.setOnClickListener(opListener)
+
+        btnNeg.setOnClickListener ({ view ->
+            val value = newNumber.text.toString()
+            if (value.isEmpty()) {
+                newNumber.setText("-")
+            } else {
+                try {
+                    var doubleValue = value.toDouble();
+                    doubleValue *= -1
+                    newNumber.setText(doubleValue.toString())
+                } catch (e: NumberFormatException) {
+                    //newNumber was "-" or ".", so clear it
+                    newNumber.setText("")
+                }
+            }
+            })
+
     }
     // Debugging Activity Lifecycle Methods
     override fun onStart() {
