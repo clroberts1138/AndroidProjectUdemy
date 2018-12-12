@@ -1,16 +1,16 @@
 package academy.learnprogramming.top10downloader
 
-import android.util.Log
+
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.lang.Exception
 
 class ParseApplications {
-    private val TAG = "ParseApplications"
+ //   private val TAG = "ParseApplications"
     val applications = ArrayList<FeedEntry>()
 
     fun parse(xmlData: String): Boolean {
-        Log.d(TAG, "parse called with $xmlData")
+    //    Log.d(TAG, "parse called with $xmlData")
         var status = true
         var inEntry = false
         var gotImage = false
@@ -28,7 +28,7 @@ class ParseApplications {
                 when (eventType) {
 
                     XmlPullParser.START_TAG -> {
-                        Log.d(TAG, "parse: Starting tag for " + tagName)
+               //         Log.d(TAG, "parse: Starting tag for " + tagName)
                         if (tagName == "entry") {
                             inEntry = true
                         }else if ((tagName == "image") && inEntry) {
@@ -41,7 +41,7 @@ class ParseApplications {
                     XmlPullParser.TEXT -> textValue = xpp.text
 
                     XmlPullParser.END_TAG -> {
-                        Log.d(TAG, "parse: Ending tag for " + tagName)
+                   //     Log.d(TAG, "parse: Ending tag for " + tagName)
                         if (inEntry) {
                             when (tagName) {
                                 "entry" -> {
@@ -63,8 +63,8 @@ class ParseApplications {
             }
 
             for (app in applications) {
-                Log.d(TAG,"*****************")
-                Log.d(TAG,app.toString())
+      //          Log.d(TAG,"*****************")
+      //          Log.d(TAG,app.toString())
             }
         } catch (e: Exception) {
             e.printStackTrace()
