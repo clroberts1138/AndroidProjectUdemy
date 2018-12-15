@@ -20,25 +20,42 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val database = baseContext.openOrCreateDatabase("sqlite-test-1.db", MODE_PRIVATE, null)
-        var sql = "CREATE TABLE contacts(_id INTEGER PRIMARY KEY NOT NULL, name TEXT, phone INTEGER, email TEXT)"
-        Log.d(TAG, "onCreate: sql is $sql")
-        database.execSQL(sql)
-    //    database.rawQuery(sql,null,null)
+//        database.execSQL("DROP TABLE IF EXISTS contacts")
+//        var sql = "CREATE TABLE IF NOT EXISTS contacts(_id INTEGER PRIMARY KEY NOT NULL, name TEXT, phone INTEGER, email TEXT)"
+//        Log.d(TAG, "onCreate: sql is $sql")
+//        database.execSQL(sql)
+//    //    database.rawQuery(sql,null,null)
+//
+//        sql = "INSERT INTO contacts(name, phone, email) VALUES('tim', 6456789, 'tim@email.com')"
+//        Log.d(TAG, "onCreate: sql is $sql")
+//        database.execSQL(sql)
+//
+//        val values = ContentValues().apply {
+//            put("name", "Fred")
+//            put("phone", 12345)
+//            put("email", "fred@nurk.com")
+//        }
+//
+//        val generatedId = database.insert("contacts", null, values)
 
-        sql = "INSERT INTO contacts(name, phone, email VALUES('tim', 6546789, 'tim@email.com')"
-        Log.d(TAG, "onCreate: sql is $sql")
-       // database.execSQL(sql)
 
-        val values = ContentValues().apply {
-            put("name", "Fred")
-            put("phone", 12345)
-            put("email", "fred@nurk.com")
+        val query = database.rawQuery("SELECT * FROM contacts", null)
+        query.use{
+            while(it.moveToNext()) {
+                // Cycle through all records
+                with(it) {
+                    val _id = getLong(0)
+                    val name = getString(1)
+                    val phone = getInt(2)
+                    val email = getString(3)
+                    val result = "ID: $_id Name = Name = $name Phone = $phone email = $email"
+                    Log.d(TAG, "onCreate: reading data $result")
+                }
+            }
         }
 
-        val generatedId = database.insert("contacts", null, values)
-        Log.d(TAG, "onCreate: record added with id $generatedId")
-
-
+        database.close()
+        //        Log.d(TAG, "onCreate: record added with id $generatedId")
         // val values = ContentValues()
         // values.put("name", "Fred")
         // values.put("phone", 12345)
