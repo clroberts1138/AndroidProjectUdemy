@@ -1,3 +1,5 @@
+@file:Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+
 package academy.learnprogramming.top10downloader
 
 import android.content.Context
@@ -88,8 +90,8 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate called")
 
         if (savedInstanceState != null) {
-            feedUrl = savedInstanceState.getString(STATE_URL)
-            feedLimit = savedInstanceState.getInt(STATE_LIMIT)
+            feedUrl = savedInstanceState.getString(this.STATE_URL)
+            feedLimit = savedInstanceState.getInt(this.STATE_LIMIT)
         }
 
         downloadUrl(feedUrl.format(feedLimit))
