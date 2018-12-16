@@ -4,14 +4,15 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
+import java.math.BigDecimal
 
-class CalculatorViewModel : ViewModel() {
+class BigDecimalViewModel : ViewModel() {
 
     // Variables to hold the operands and type of calcualation
-    private var operand1: Double? = null
+    private var operand1: BigDecimal? = null
     private var pendingOperation = "="
 
-    private val result = MutableLiveData<Double>()
+    private val result = MutableLiveData<BigDecimal>()
     val stringResult: LiveData<String>
     get() = Transformations.map(result) {it.toString()}
 
@@ -33,7 +34,7 @@ class CalculatorViewModel : ViewModel() {
 
     fun operandPressed(op:String){
         try {
-            val value = newNumber.value?.toDouble()
+            val value = newNumber.value?.toBigDecimal()
             if(value != null) {
                 performOperation(value, op)
             }
@@ -50,8 +51,8 @@ class CalculatorViewModel : ViewModel() {
             newNumber.value = "-"
         } else {
             try {
-                var doubleValue = value.toDouble();
-                doubleValue *= -1
+                var doubleValue = value.toBigDecimal();
+                doubleValue *= BigDecimal.valueOf(-1)
                 newNumber.value = doubleValue.toString()
             } catch (e: NumberFormatException) {
                 //newNumber was "-" or ".", so clear it
@@ -61,14 +62,14 @@ class CalculatorViewModel : ViewModel() {
     }
 
     fun clrPressed() {
-        result.value = 0.0
+        result.value = BigDecimal.valueOf(0)
         newNumber.value = ""
         operand1 = null
         pendingOperation = ""
         operation.value = pendingOperation
     }
 
-    private fun performOperation(value: Double, operation: String) {
+    private fun performOperation(value: BigDecimal, operation: String) {
         if (operand1 == null) {
             operand1 = value
         } else {
@@ -77,8 +78,8 @@ class CalculatorViewModel : ViewModel() {
             }
             when (pendingOperation) {
                 "=" -> operand1 = value
-                "/" -> operand1 = if (value == 0.0) {
-                    Double.NaN // handle attempt to divide by zero
+                "/" -> operand1 = if (value == BigDecimal.valueOf(0.0)) {
+                    BigDecimal.valueOf(Double.NaN) // handle attempt to divide by zero
                 } else {
                     operand1!! / value
                 }
